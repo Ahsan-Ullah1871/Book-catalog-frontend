@@ -1,7 +1,10 @@
-import React from "react";
-
 const App = () => {
-	return <div></div>;
+	return (
+		<div className="h-screen bg-green-200 text-orange-300 text-4xl">
+			Hello world
+		</div>
+	);
 };
 
 export default App;
+
