@@ -1,11 +1,9 @@
-import BookCarousel from "./components/ui/BooksCarousel";
-import BookCard from "./components/ui/BookCard";
-import LatestBooks from "./components/Home/LatestBooks";
+import Footer from "./components/ui/Footer";
 
 const App = () => {
 	return (
 		<div className="min-h-screen bg-[#EBE9E1]  flex items-center justify-center ">
-			<LatestBooks />
+			<Footer />
 		</div>
 	);
 };
