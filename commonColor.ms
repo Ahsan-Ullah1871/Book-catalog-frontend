@@ -1,0 +1,8 @@
+#3B3B3B
+
+#EBE9E1
+
+#3C3C3C
+
+Size:
+1170px
