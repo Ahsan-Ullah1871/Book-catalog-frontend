@@ -6,17 +6,9 @@ export const ApiSlice = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: "https://book-catalog-backend.vercel.app/api/v1/",
 	}),
-	endpoints: (builder) => ({
-		getProducts: builder.query({
-			query: () => `/product`,
-		}),
-		getProductDetails: builder.query({
-			query: (id: number | string) => `/product/${id}`,
-		}),
-	}),
+	endpoints: () => ({}),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProductsQuery, useGetProductDetailsQuery } = ApiSlice;
 

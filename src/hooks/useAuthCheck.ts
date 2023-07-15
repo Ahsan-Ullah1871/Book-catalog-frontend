@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "./redxHook";
+import { useAppDispatch } from "./reduxHook";
 import { useCookies } from "react-cookie";
 import { userLoggedIn } from "@/redux/features/auth/authSlice";
 
@@ -10,12 +10,13 @@ export default function useAuthCheck() {
 
 	useEffect(() => {
 		if (cookies.auth_details?.isLoggedIn) {
-			const userData = JSON.parse(cookies.auth_details);
-			if (userData.isLoggedIn && userData.user) {
+			const { isLoggedIn = false, user = undefined } =
+				cookies.auth_details;
+			if (isLoggedIn && user) {
 				dispatch(
 					userLoggedIn({
-						isLoggedIn: userData.isLoggedIn,
-						user: userData.user,
+						isLoggedIn: isLoggedIn,
+						user,
 					})
 				);
 			}

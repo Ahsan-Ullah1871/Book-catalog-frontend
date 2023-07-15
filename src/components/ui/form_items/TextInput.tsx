@@ -7,6 +7,7 @@ type ITextInput = {
 	currentValue: string;
 	placeHolder: string;
 	className?: string;
+	required?: boolean;
 };
 
 const TextInput = ({
@@ -16,6 +17,7 @@ const TextInput = ({
 	currentValue,
 	placeHolder,
 	className,
+	required,
 }: ITextInput) => {
 	const defaultClassValue =
 		"border border-[#000] rounded h-11 px-4 py-5 font-inter text-[#000000]  bg-transparent outline-none ";
@@ -29,6 +31,7 @@ const TextInput = ({
 				value={currentValue}
 				onChange={onChange}
 				placeholder={placeHolder}
+				required={required ?? false}
 			/>
 		</div>
 	);
