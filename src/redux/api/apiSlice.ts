@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define a service using a base URL and expected endpoints
-export const Api = createApi({
+export const ApiSlice = createApi({
 	reducerPath: "apis",
 	baseQuery: fetchBaseQuery({
 		baseUrl: "https://book-catalog-backend.vercel.app/api/v1/",
@@ -18,5 +18,5 @@ export const Api = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProductsQuery, useGetProductDetailsQuery } = Api;
+export const { useGetProductsQuery, useGetProductDetailsQuery } = ApiSlice;
 
