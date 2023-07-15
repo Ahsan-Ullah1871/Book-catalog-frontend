@@ -1,9 +1,9 @@
-import Footer from "./components/ui/Footer";
+import BookDetails from "./components/BookDetails/BookDetails";
 
 const App = () => {
 	return (
 		<div className="min-h-screen bg-[#EBE9E1]  flex items-center justify-center ">
-			<Footer />
+			<BookDetails />
 		</div>
 	);
 };
