@@ -11,6 +11,10 @@ export default {
 				inter: ["Inter", "sans-serif"],
 				anton: ["Anton", "sans-serif"],
 			},
+			backgroundImage: {
+				"box-pattern":
+					"url('@/assets/images/loginPattern.svg')",
+			},
 		},
 	},
 
