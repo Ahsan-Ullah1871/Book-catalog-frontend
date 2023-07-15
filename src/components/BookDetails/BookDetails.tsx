@@ -1,5 +1,6 @@
 import BookImagesCarousel from "../ui/BookImagesCarousel";
 import BookInfo from "../ui/BookInfo";
+import ReviewSection from "./ReviewSection";
 
 const BookDetails = () => {
 	return (
@@ -15,7 +16,11 @@ const BookDetails = () => {
 					<BookInfo />
 				</div>
 			</div>
-			;
+
+			{/* Reviews */}
+			<div>
+				<ReviewSection />
+			</div>
 		</div>
 	);
 };
