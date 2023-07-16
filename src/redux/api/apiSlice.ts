@@ -1,22 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "../store";
 
 // Define a service using a base URL and expected endpoints
-export const Api = createApi({
+export const apiSlice = createApi({
 	reducerPath: "apis",
 	baseQuery: fetchBaseQuery({
-		baseUrl: "https://book-catalog-backend.vercel.app/api/v1/",
+		baseUrl: "http://localhost:5001/api/v1/",
+		prepareHeaders(headers, { getState }) {
+			// Access the authentication token from the Redux store
+			const authToken = (getState() as RootState).auth
+				.accessToken;
+			if (authToken) {
+				headers.set("Authorization", `${authToken}`);
+			}
+			return headers;
+		},
 	}),
-	endpoints: (builder) => ({
-		getProducts: builder.query({
-			query: () => `/product`,
-		}),
-		getProductDetails: builder.query({
-			query: (id: number | string) => `/product/${id}`,
-		}),
-	}),
+	tagTypes: ["filteringItems", "book", "books", "reviews", "latest_books"],
+
+	endpoints: () => ({}),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProductsQuery, useGetProductDetailsQuery } = Api;
 
