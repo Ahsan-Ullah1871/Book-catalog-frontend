@@ -55,17 +55,17 @@ const FilterBook = ({ filter }: IFilterBook) => {
 	};
 
 	return (
-		<div className="flex items-start justify-between">
-			<div className="flex items-center justify-start gap-4">
+		<div className="flex flex-col sm:flex-row items:start md:items-center justify-between gap-4">
+			<div className="flex  items-start md:items-center justify-start gap-4">
 				{/* title */}
 				<h1
 					className=" text-[#000]   font-anton  text-[20px] md:text-[30px]   font-normal 
-                      leading-[30px] md:leading-[50px]  letter-spacing  "
+                      leading-[30px] md:leading-[50px]  letter-spacing flex-none  whitespace-nowrap  "
 				>
 					Filter By:
 				</h1>
 				{/* Filter Buttons */}
-				<div className=" flex items-center justify-start gap-[10px]  ">
+				<div className=" flex items-center justify-start flex-wrap gap-[10px]  ">
 					<button
 						className={[
 							"h-8 px-6   rounded-3xl text-lg text-[#000] border border-[#000] text-center hover:bg-[#000] hover:text-white ",
@@ -115,13 +115,15 @@ const FilterBook = ({ filter }: IFilterBook) => {
 			</div>
 
 			{isLoggedIn && (
-				<Link to={"/add-book"}>
-					<Button
-						title="Add New Book"
-						className=" bg-[#2B2321] px-[20px] md:px-[40px] py-[10px] md:py-[18px] "
-						icon={ICONS.folder_plus}
-					/>
-				</Link>
+				<div className="flex  justify-end">
+					<Link to={"/add-book"}>
+						<Button
+							title="Add New Book"
+							className=" bg-[#2B2321] px-[20px] md:px-[20px] py-[10px] md:py-[18px] "
+							icon={ICONS.folder_plus}
+						/>
+					</Link>
+				</div>
 			)}
 		</div>
 	);

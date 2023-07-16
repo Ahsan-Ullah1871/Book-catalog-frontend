@@ -10,12 +10,14 @@ export const bookApi = apiSlice.injectEndpoints({
 				const query = args ? ParamSerialization(args) : "";
 				return `/books?${query}`;
 			},
+			providesTags: ["books"],
 		}),
-		//Get All books
+		//Get  book details
 		getBookDetails: builder.query({
-			query: (args: Record<string, unknown>) => {
-				return `/books/${args?.bookID}`;
+			query: (bookID) => {
+				return `/books/${bookID}`;
 			},
+			providesTags: ["book"],
 		}),
 
 		//Get All Filtering Items
@@ -32,32 +34,95 @@ export const bookApi = apiSlice.injectEndpoints({
 				body: data,
 			}),
 			invalidatesTags: ["filteringItems"],
+		}),
 
-			// async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-			// 	try {
-			// 		const { data: new_book } =
-			// 			(await queryFulfilled) as {
-			// 				data: IBook;
-			// 			};
+		// // delete book
+		deleteBook: builder.mutation({
+			query: ({ bookID }) => ({
+				url: `/books/${bookID}`,
+				method: "DELETE",
+			}),
 
-			// 		if (new_book?._id) {
-			// 			//Cash updating in  Pessimistic  way
-			// 			dispatch(
-			// 				BookApi.util.updateQueryData(
-			// 					"getBooks",
-			// 					undefined,
-			// 					(draft) => {
-			// 						draft.push(
-			// 							new_book
-			// 						);
-			// 					}
-			// 				)
-			// 			);
-			// 		}
-			// 	} catch (error) {
-			// 		//
-			// 	}
-			// },
+			invalidatesTags: ["filteringItems"],
+
+			async onQueryStarted(
+				{ bookID },
+				{ dispatch, queryFulfilled }
+			) {
+				try {
+					const { data: book_data } =
+						await queryFulfilled;
+
+					// const patchResult =
+					if (book_data) {
+						//
+					}
+					dispatch(
+						bookApi.util.updateQueryData(
+							"getBookDetails",
+							bookID,
+							(draft) => {
+								return draft.filter(
+									(item: {
+										data: {
+											_id: string;
+										};
+									}) =>
+										item.data
+											?._id !=
+										bookID
+								);
+							}
+						)
+					);
+				} catch {
+					//
+				}
+			},
+		}),
+
+		// editBook
+		editBook: builder.mutation({
+			query: ({ bookID, book_data }) => ({
+				url: `/books/${bookID}`,
+				method: "PATCH",
+				body: { ...book_data },
+			}),
+			invalidatesTags: ["filteringItems", "books"],
+
+			async onQueryStarted(
+				{ bookID, book_data },
+				{ dispatch, queryFulfilled }
+			) {
+				// test part
+				if (!book_data) {
+					//
+				}
+
+				try {
+					const { data: book_data } =
+						await queryFulfilled;
+
+					const updatedBook = book_data;
+
+					// const patchResult =
+
+					dispatch(
+						bookApi.util.updateQueryData(
+							"getBookDetails",
+							bookID,
+							(draft) => {
+								Object.assign(
+									draft,
+									updatedBook
+								);
+							}
+						)
+					);
+				} catch {
+					//
+				}
+			},
 		}),
 	}),
 });
@@ -67,4 +132,6 @@ export const {
 	useGetBookDetailsQuery,
 	useAddBookMutation,
 	useGetUniqueFilteringItemsQuery,
+	useDeleteBookMutation,
+	useEditBookMutation,
 } = bookApi;

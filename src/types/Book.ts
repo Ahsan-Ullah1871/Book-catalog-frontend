@@ -13,6 +13,6 @@ export type IBook = {
 	cover_image: string;
 	keynotes: string[];
 	publication_date: string;
-	added_by: string | Partial<IUser>;
+	added_by: string | IUser;
 };
 

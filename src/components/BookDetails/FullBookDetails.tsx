@@ -6,11 +6,17 @@ import { useGetBookDetailsQuery } from "@/redux/features/book/bookApi";
 import { useEffect, useState } from "react";
 import { IBook } from "@/types/Book";
 import BookDetailsSkeleton from "./BookDetailsSkeleton";
+import { useAppSelector } from "@/hooks/reduxHook";
+import { IUser } from "@/types/User";
+import BookOwnerButtons from "./BookOwnerButtons";
 
 const FullBookDetails = () => {
 	const { bookID } = useParams();
 
-	//
+	// user state from redux
+	const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+
+	//bookDetailsSkip state
 	const [bookDetailsSkip, setBookDetailsSkip] = useState(true);
 	useEffect(() => {
 		if (bookID) {
@@ -22,19 +28,22 @@ const FullBookDetails = () => {
 	const {
 		data: book_details_data,
 		isLoading,
-		// isError,
+		isError,
 		// error,
-	} = useGetBookDetailsQuery(
-		{
-			bookID,
-		},
-		{ skip: bookDetailsSkip }
-	);
+	} = useGetBookDetailsQuery(bookID, { skip: bookDetailsSkip });
 
 	const book_details: IBook = book_details_data?.data;
+	const book_added_by: IUser = book_details?.added_by as IUser;
 
 	return (
-		<div className=" min-h-screen bg-[#FAF9F5] w-full py-20">
+		<div className=" min-h-screen bg-[#FAF9F5] w-full py-8 md:py-20">
+			{!isLoading &&
+				!isError &&
+				isLoggedIn &&
+				user?._id === book_added_by?._id && (
+					<BookOwnerButtons book_info={book_details} />
+				)}
+
 			{isLoading ? (
 				<BookDetailsSkeleton />
 			) : (

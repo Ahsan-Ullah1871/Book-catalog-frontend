@@ -7,17 +7,18 @@ import ICONS from "@/shared/AllIcons";
 import { get_error_messages } from "@/lib/error_messages";
 import TextArea from "../ui/form_items/TextArea";
 import { useAppSelector } from "@/hooks/reduxHook";
-import { useAddBookMutation } from "@/redux/features/book/bookApi";
+import { IBook } from "@/types/Book";
+import { useEditBookMutation } from "@/redux/features/book/bookApi";
 
-const AddBookForm = () => {
+const EditBookForm = ({ book_details }: { book_details: IBook }) => {
 	// user details
 	const { user } = useAppSelector((state) => state.auth);
 
 	// Add book mutation hook
 	const [
-		addBok,
+		editBook,
 		{ data: new_book_data, isLoading, isError, error, isSuccess },
-	] = useAddBookMutation();
+	] = useEditBookMutation();
 
 	// Alert State
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -42,6 +43,24 @@ const AddBookForm = () => {
 		added_by: "",
 	});
 
+	// initial value set
+	useEffect(() => {
+		setBookForm({
+			title: book_details.title,
+			author: book_details.author,
+			genre: book_details.genre,
+			publisher: book_details.publisher,
+			language: book_details?.language,
+			pages: book_details?.pages,
+			rating: book_details?.rating,
+			description: book_details?.description,
+			cover_image: book_details?.cover_image,
+			keynotes: book_details?.keynotes,
+			publication_date: book_details?.publication_date,
+			added_by: "",
+		});
+	}, [book_details]);
+
 	//formSubmitHandler
 	const formSubmitHandler = (e: React.SyntheticEvent) => {
 		e.preventDefault();
@@ -50,7 +69,7 @@ const AddBookForm = () => {
 		book_data.pages = Number(book_data.pages);
 		book_data.rating = Number(book_data.rating);
 
-		addBok(book_data);
+		editBook({ bookID: book_details?._id, book_data });
 	};
 
 	// Input handler
@@ -96,7 +115,7 @@ const AddBookForm = () => {
 				className=" text-[#000]   font-anton  text-[20px] md:text-[30px]   font-normal 
                       leading-[30px] md:leading-[50px]  letter-spacing  text-center  "
 			>
-				Add new book
+				Edit book
 			</h1>
 			<div className="space-y-6 block relative">
 				{/* Title */}
@@ -228,7 +247,7 @@ const AddBookForm = () => {
 			{/* Submit button */}
 			<Button
 				type="submit"
-				title="Submit"
+				title="Edit"
 				className="  bg-[#B4E907]   w-full mx-auto py-[17px] md:py-[10px] px-10 mmd:px-14 border border-[#000]   
 					 text-base font-medium rounded"
 				icon={isLoading && ICONS.button_loading_icon}
@@ -249,5 +268,5 @@ const AddBookForm = () => {
 	);
 };
 
-export default AddBookForm;
+export default EditBookForm;
 
