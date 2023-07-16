@@ -1,13 +1,12 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import BookCard from "./BookCard";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import ICONS from "@/shared/AllIcons";
-import { IBook } from "@/types/Book";
+import BookCardSkeleton from "../ui/skeleton/BookCardSkeleton";
 
 const SwiperButtonNext = () => {
 	const swiper = useSwiper();
@@ -32,11 +31,7 @@ const SwiperButtonPrev = () => {
 	);
 };
 
-export default function BookCarousel({
-	books_list_data,
-}: {
-	books_list_data: IBook[];
-}) {
+export default function BooksCarouselSkeleton() {
 	return (
 		<Swiper
 			slidesPerView={"auto"}
@@ -47,13 +42,27 @@ export default function BookCarousel({
 			modules={[Navigation]}
 			className="  w-full h-full   flex flex-col"
 		>
-			{books_list_data?.map((book) => {
-				return (
-					<SwiperSlide className="w-[370px] ">
-						<BookCard book={book} />
-					</SwiperSlide>
-				);
-			})}
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
+			<SwiperSlide className="w-[370px] ">
+				<BookCardSkeleton />
+			</SwiperSlide>
 
 			<div className="flex items-center justify-end gap-5 my-5">
 				<SwiperButtonPrev />

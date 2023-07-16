@@ -58,9 +58,19 @@ const SignInForm = () => {
 			onSubmit={formSubmitHandler}
 			className=" relative flex  max-w-lg rounded-xl w-full  flex-col gap-4 bg-[#FFFFFF] px-10 md:px-[74px] py-12 "
 		>
-			<h1 className=" text-4xl  font-anton text-ceter ">
-				LOG IN
-			</h1>
+			<div className="flex items-center justify-between gap-3 flex-wrap ">
+				<h1 className=" text-4xl  font-anton text-ceter ">
+					LOG IN
+				</h1>
+
+				<Link
+					to={"/"}
+					className="flex items-center  gap-2 "
+				>
+					{ICONS.home} Back to home
+				</Link>
+			</div>
+
 			<div className="flex flex-col gap-6">
 				<TextInput
 					type="email"
@@ -100,7 +110,7 @@ const SignInForm = () => {
 			<div>
 				<p className="font-inter text-base text-[#000] text-center ">
 					Not registered?
-					<Link to={"/auth/signin"}>
+					<Link to={"/auth/signup"}>
 						<a
 							className="ml-2  underline"
 							href=""

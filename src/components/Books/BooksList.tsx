@@ -16,12 +16,14 @@ export default function BooksList() {
 	const [filter, setFilter] = useState({
 		year: "",
 		genre: "",
+		search: "",
 	});
 
 	useEffect(() => {
 		const tempSearchParams = {
 			year: searchParams.get("year") ?? "",
 			genre: searchParams.get("genre") ?? "",
+			search: searchParams.get("search") ?? "",
 		};
 
 		setFilter(tempSearchParams);
@@ -36,6 +38,7 @@ export default function BooksList() {
 	} = useGetBooksQuery({
 		publication_date: filter.year,
 		genre: filter.genre,
+		searchTerm: filter.search,
 	});
 
 	const books_lis_data = books?.data?.data;

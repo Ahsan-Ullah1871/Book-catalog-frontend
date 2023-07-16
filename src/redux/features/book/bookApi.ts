@@ -12,6 +12,13 @@ export const bookApi = apiSlice.injectEndpoints({
 			},
 			providesTags: ["books"],
 		}),
+
+		//Get latest-ten
+		getLatestBooks: builder.query({
+			query: () => `/books/latest-ten`,
+			providesTags: ["latest_books"],
+		}),
+
 		//Get  book details
 		getBookDetails: builder.query({
 			query: (bookID) => {
@@ -33,17 +40,17 @@ export const bookApi = apiSlice.injectEndpoints({
 				method: "POST",
 				body: data,
 			}),
-			invalidatesTags: ["filteringItems"],
+			invalidatesTags: ["filteringItems", "latest_books"],
 		}),
 
-		// // delete book
+		//   delete book
 		deleteBook: builder.mutation({
 			query: ({ bookID }) => ({
 				url: `/books/${bookID}`,
 				method: "DELETE",
 			}),
 
-			invalidatesTags: ["filteringItems"],
+			invalidatesTags: ["filteringItems", "latest_books"],
 
 			async onQueryStarted(
 				{ bookID },
@@ -134,4 +141,5 @@ export const {
 	useGetUniqueFilteringItemsQuery,
 	useDeleteBookMutation,
 	useEditBookMutation,
+	useGetLatestBooksQuery,
 } = bookApi;

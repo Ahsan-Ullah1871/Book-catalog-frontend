@@ -18,7 +18,7 @@ export default function BookCard2({ book }: IBookCard) {
 				/>
 				{/* other items */}
 				<div className="mt-[18px]">
-					{/* title & genre  */}
+					{/* title & rating  */}
 					<div className="flex items-center justify-between gap-[24px] px-4 ">
 						<p className="text-[#3C3C3C] font-inter  text-2xl font-medium    ">
 							{book?.title}
@@ -46,7 +46,7 @@ export default function BookCard2({ book }: IBookCard) {
 				{/* buttons*/}
 				<div className="  border-t border-[#000] p-[10px]  flex items-center justify-between mt-auto">
 					<button className="text-[#3C3C3C] font-inter  text-lg font-semibold  ">
-						Start now
+						Start Reading
 					</button>
 					<button className="text-xm text-white px-6 py-1 bg-[#000000]">
 						{ICONS.heart_icon}

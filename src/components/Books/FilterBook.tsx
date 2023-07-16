@@ -5,11 +5,16 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import FilterDropDown from "./FilterDropDown";
 import { useGetUniqueFilteringItemsQuery } from "@/redux/features/book/bookApi";
 import { useEffect } from "react";
+import BookSearchbar from "./BookSearchbar";
 
 type IFilterBook = {
-	filter: { genre: string; year: string };
+	filter: { genre: string; year: string; search: string };
 	setFilter: React.Dispatch<
-		React.SetStateAction<{ year: string; genre: string }>
+		React.SetStateAction<{
+			year: string;
+			genre: string;
+			search: string;
+		}>
 	>;
 };
 const FilterBook = ({ filter }: IFilterBook) => {
@@ -107,6 +112,20 @@ const FilterBook = ({ filter }: IFilterBook) => {
 						handleFilterValue={(value) => {
 							handleFilter({
 								key: "genre",
+								value,
+							});
+						}}
+					/>
+					{/* Search */}
+					<BookSearchbar
+						current_value={
+							filter.search
+								? filter.search
+								: ""
+						}
+						handleFilterValue={(value) => {
+							handleFilter({
+								key: "search",
 								value,
 							});
 						}}

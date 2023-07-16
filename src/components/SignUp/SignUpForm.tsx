@@ -41,9 +41,6 @@ const SignUpForm = () => {
 				},
 			},
 		});
-		console.log("====================================");
-		console.log(sign_up_form);
-		console.log("====================================");
 	};
 
 	// Input handler
@@ -75,9 +72,18 @@ const SignUpForm = () => {
 				className=" relative flex  max-w-lg rounded-xl w-full  flex-col gap-4 bg-[#FFFFFF] px-[74px] py-12 "
 			>
 				{/* title */}
-				<h1 className=" text-4xl  font-anton text-ceter ">
-					Signup
-				</h1>
+				<div className="flex items-center justify-between gap-3 flex-wrap ">
+					<h1 className=" text-4xl  font-anton text-ceter ">
+						Signup
+					</h1>
+
+					<Link
+						to={"/"}
+						className="flex items-center  gap-2 "
+					>
+						{ICONS.home} Back to home
+					</Link>
+				</div>
 				<div className="flex flex-col gap-6">
 					{/* Name */}
 					<div className="grid grid-cols-2 gap-3">

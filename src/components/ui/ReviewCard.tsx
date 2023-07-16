@@ -2,7 +2,7 @@ import ICONS from "@/shared/AllIcons";
 import { IReview } from "@/types/Review";
 import { IUser } from "@/types/User";
 
-const ReviewCard = ({ review }: { review: IReview }) => {
+export default function ReviewCard({ review }: { review: IReview }) {
 	const reviewed_by = review?.reviewed_by as IUser;
 	return (
 		<div className="border border-[#000] px-10 py-7 max-w-[478px] min-h-[232px] ">
@@ -32,7 +32,5 @@ const ReviewCard = ({ review }: { review: IReview }) => {
 			</div>
 		</div>
 	);
-};
-
-export default ReviewCard;
+}
 
