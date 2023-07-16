@@ -5,8 +5,9 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import ReviewCard from "./ReviewCard";
+import { IReview } from "@/types/Review";
 
-const ReviewsCarousel = () => {
+const ReviewsCarousel = ({ book_reviews }: { book_reviews: IReview[] }) => {
 	return (
 		<Swiper
 			slidesPerView={"auto"}
@@ -21,21 +22,13 @@ const ReviewsCarousel = () => {
 			modules={[Navigation, Autoplay]}
 			className="  w-full h-full   flex flex-col"
 		>
-			<SwiperSlide className="w-[478px] ">
-				<ReviewCard />
-			</SwiperSlide>
-			<SwiperSlide className="w-[478px] ">
-				<ReviewCard />
-			</SwiperSlide>
-			<SwiperSlide className="w-[478px] ">
-				<ReviewCard />
-			</SwiperSlide>
-			<SwiperSlide className="w-[478px] ">
-				<ReviewCard />
-			</SwiperSlide>
-			<SwiperSlide className="w-[478px] ">
-				<ReviewCard />
-			</SwiperSlide>
+			{book_reviews?.map((review) => {
+				return (
+					<SwiperSlide className="w-[478px] ">
+						<ReviewCard review={review} />
+					</SwiperSlide>
+				);
+			})}
 		</Swiper>
 	);
 };

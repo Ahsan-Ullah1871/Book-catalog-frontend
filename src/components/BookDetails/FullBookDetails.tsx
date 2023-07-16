@@ -66,7 +66,7 @@ const FullBookDetails = () => {
 
 			{/* Reviews */}
 			<div className=" mt-[70px] md:mt-[140px]">
-				<ReviewSection />
+				<ReviewSection book_details={book_details} />
 			</div>
 		</div>
 	);

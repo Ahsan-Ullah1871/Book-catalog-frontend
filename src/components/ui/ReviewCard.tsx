@@ -1,25 +1,33 @@
-import { Avatar } from "flowbite-react";
+import ICONS from "@/shared/AllIcons";
+import { IReview } from "@/types/Review";
+import { IUser } from "@/types/User";
 
-const ReviewCard = () => {
+const ReviewCard = ({ review }: { review: IReview }) => {
+	const reviewed_by = review?.reviewed_by as IUser;
 	return (
-		<div className="border border-[#000] px-10 py-7 max-w-[478px] h-[232px] ">
-			<div className="flex items-center justify-start gap-10">
-				<Avatar
+		<div className="border border-[#000] px-10 py-7 max-w-[478px] min-h-[232px] ">
+			<div className="flex items-center justify-start gap-8">
+				{/* <Avatar
 					alt="avatar of Jese"
 					img="/images/people/profile-picture-5.jpg"
 					rounded
-				/>
+				/> */}
+
+				<span className=" p-3 w-14 h-14 rounded-full shadow-md flex items-center justify-center text-lg">
+					{ICONS.profile}
+				</span>
 
 				<p className="text-[#202020]  text-[20px] font-inter font-normal leading-[38px]">
-					Mr. Ahsan
+					{reviewed_by?.name?.firstName}
 				</p>
 			</div>
 
 			<div className="mt-6">
-				<p className="text-[#202020]  text-[20px] font-inter font-normal leading-[38px]">
-					Any of your events you can choose from
-					clothfit. I do now recommend Clothfit with
-					blind eyes
+				<p className="text-[#202020]  text-[20px] font-inter font-normal leading-[38px] ">
+					{review?.review?.length > 200
+						? review?.review.substring(0, 180) +
+						  "..."
+						: review?.review}
 				</p>
 			</div>
 		</div>
