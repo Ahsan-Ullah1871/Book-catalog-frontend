@@ -1,13 +1,14 @@
 import ICONS from "@/shared/AllIcons";
 import Button from "./Button";
-import { Accordion } from "flowbite-react";
+// import { Accordion } from "flowbite-react";
+import { IBook } from "@/types/Book";
 
-const BookInfo = () => {
+const BookInfo = ({ book_info }: { book_info: IBook | undefined }) => {
 	return (
-		<div className="h-auto w-full min-h-[200px] border border-[#000000] bg-[#EAE3D1] p-9">
+		<div className="h-full w-full min-h-[200px] border border-[#000000] bg-[#EAE3D1] p-9">
 			{/* title */}
 			<h2 className=" text-[#3C3C3C] font-anton text-[40px] font-normal leading-[50px]">
-				Western Chelsea Black
+				{book_info?.title}
 			</h2>
 			{/* ratings */}
 			<div className="flex items-center justify-start mt-5">
@@ -34,9 +35,7 @@ const BookInfo = () => {
 				</p>
 
 				<p className="text-[#656565] text-[16px] font-inter font-medium leading-[25px] mt-[6px]">
-					Bringing back another winter classic, our
-					Western Chelsea reimagines the timeless
-					Chelsea boot with premium Polido leather.
+					{book_info?.description}
 				</p>
 			</div>
 
@@ -47,7 +46,7 @@ const BookInfo = () => {
 			/>
 
 			{/* Key notes */}
-			<Accordion className="mt-40px divide-[#000] pb-10">
+			{/* <Accordion className="mt-40px divide-[#000] pb-10">
 				<Accordion.Panel className="  ">
 					<Accordion.Title
 						className="text-[#000] text-[20px] font-inter font-medium leading-[30px] px-0 
@@ -102,7 +101,7 @@ const BookInfo = () => {
 						</p>
 					</Accordion.Content>
 				</Accordion.Panel>
-			</Accordion>
+			</Accordion> */}
 		</div>
 	);
 };

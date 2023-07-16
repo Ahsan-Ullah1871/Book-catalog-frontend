@@ -8,6 +8,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import Books from "@/pages/Books";
 import AddBook from "@/components/AddBook/AddBook";
 import PrivateRoute from "./PrivateRoute";
+import BookDetails from "@/pages/BookDetails";
 
 export const AllRoutes = createBrowserRouter([
 	{
@@ -29,6 +30,10 @@ export const AllRoutes = createBrowserRouter([
 			{
 				path: "/books",
 				element: <Books />,
+			},
+			{
+				path: "/books/:bookID",
+				element: <BookDetails />,
 			},
 			{
 				path: "/add-book",

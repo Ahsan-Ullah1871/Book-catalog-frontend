@@ -11,6 +11,12 @@ export const bookApi = apiSlice.injectEndpoints({
 				return `/books?${query}`;
 			},
 		}),
+		//Get All books
+		getBookDetails: builder.query({
+			query: (args: Record<string, unknown>) => {
+				return `/books/${args?.bookID}`;
+			},
+		}),
 
 		//Get All Filtering Items
 		getUniqueFilteringItems: builder.query({
@@ -58,6 +64,7 @@ export const bookApi = apiSlice.injectEndpoints({
 
 export const {
 	useGetBooksQuery,
+	useGetBookDetailsQuery,
 	useAddBookMutation,
 	useGetUniqueFilteringItemsQuery,
 } = bookApi;

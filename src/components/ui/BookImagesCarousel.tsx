@@ -1,6 +1,5 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import Sample from "@/assets/images/longshoe.png";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
 
 // Import Swiper styles
@@ -8,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const BookImagesCarousel = () => {
+const BookImagesCarousel = ({ images }: { images: string[] }) => {
 	return (
 		<Swiper
 			slidesPerView={"auto"}
@@ -24,42 +23,19 @@ const BookImagesCarousel = () => {
 			modules={[Navigation, Pagination, Autoplay]}
 			className="  w-full h-full"
 		>
-			<SwiperSlide className=" w-full aspect-square ">
-				<img
-					src={Sample}
-					className="w-full h-full object-cover"
-				/>
-			</SwiperSlide>
-			<SwiperSlide className=" w-full aspect-square ">
-				<img
-					src={Sample}
-					className="w-full h-full object-cover"
-				/>
-			</SwiperSlide>
-			<SwiperSlide className=" w-full aspect-square ">
-				<img
-					src={Sample}
-					className="w-full h-full object-cover"
-				/>
-			</SwiperSlide>
-			<SwiperSlide className=" w-full aspect-square ">
-				<img
-					src={Sample}
-					className="w-full h-full object-cover"
-				/>
-			</SwiperSlide>
-			<SwiperSlide className=" w-full aspect-square ">
-				<img
-					src={Sample}
-					className="w-full h-full object-cover"
-				/>
-			</SwiperSlide>
-			<SwiperSlide className=" w-full aspect-square ">
-				<img
-					src={Sample}
-					className="w-full h-full object-cover"
-				/>
-			</SwiperSlide>
+			{images?.map((item, index) => {
+				return (
+					<SwiperSlide
+						className=" w-full aspect-square "
+						key={index * 207}
+					>
+						<img
+							src={item}
+							className="w-full h-full object-cover"
+						/>
+					</SwiperSlide>
+				);
+			})}
 		</Swiper>
 	);
 };
