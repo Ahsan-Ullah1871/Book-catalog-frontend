@@ -1,51 +1,80 @@
 // import { ICONS } from "@/shared/AllIcons";
 import logo from "@/assets/images/BookCatalog.png";
-import { useAppSelector } from "@/hooks/reduxHook";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { Link } from "react-router-dom";
 import Profile from "./Profile";
+import { useCookies } from "react-cookie";
+import { userLoggedOut } from "@/redux/features/auth/authSlice";
 
 export default function Header() {
 	// auth selector
 	const { isLoggedIn } = useAppSelector((state) => state.auth);
 
+	const dispatch = useAppDispatch();
+
+	/* eslint-disable @typescript-eslint/no-unused-vars */
+	const [_cookies, _setCookie, removeCookie] = useCookies([
+		"auth_details",
+	]);
+
+	// handle logout
+	const handleLogout = () => {
+		dispatch(userLoggedOut());
+		// dispatch(apiSlice.util.invalidateTags(["courseVideos"]));
+		removeCookie("auth_details", { path: "/" });
+	};
+
 	return (
-		<div className=" max-w-[1170px] mx-auto  bg-transparent flex items-center justify-between py-4 border-b border-[#000000] ">
+		<div className=" max-w-[1170px] mx-auto  bg-transparent flex items-start md:items-center justify-between py-4 border-b border-[#000000] ">
 			{/* logo */}
 			<Link to={"/"}>
 				<img
 					src={logo}
 					alt=""
+					className="  flex-none"
 				/>
 			</Link>
 
 			{/* Menus */}
-			<ul className="flex items-center justify-end divide-x divide-[#3B3B3B] ">
+			<ul className="flex items-center flex-wrap justify-end divide-x divide-[#3B3B3B] ">
 				<Link to="/books">
 					<li
-						className=" text-base font-normal text-[#3B3B3B]
-				 font-inter px-8 "
+						className=" text-sm sm:text-base font-normal text-[#3B3B3B]
+				 font-inter px-2 md:px-8 "
 					>
 						Books
 					</li>
 				</Link>
 
-				{/* {isLoggedIn && (
-					<li
-						className=" text-base font-normal text-[#3B3B3B]
-				 font-inter  px-8"
-					>
-						{user?.name?.firstName}
-					</li>
-				)} */}
+				{isLoggedIn && (
+					<Link to="/wishlsit">
+						<li
+							className=" text-sm sm:text-base font-normal text-[#3B3B3B]
+				 font-inter px-2 md:px-8 "
+						>
+							Wishlist
+						</li>
+					</Link>
+				)}
+				{isLoggedIn && (
+					<Link to="/reading-list">
+						<li
+							className=" text-sm sm:text-base font-normal text-[#3B3B3B]
+				 font-inter px-2 md:px-8 "
+							className=" text-sm sm:text-base font-normal text-[#3B3B3B]
+				 font-inter px-2 md:px-8 "
+						>
+							Reading list
+						</li>
+					</Link>
+				)}
 				{isLoggedIn ? (
-					<li>
-						<Profile />
-					</li>
+					<li onClick={handleLogout}>Log out</li>
 				) : (
 					<Link to={"/auth/signin"}>
 						<li
-							className=" text-base font-normal text-[#3B3B3B]
-				 font-inter  px-8"
+							className=" text-sm sm:text-base font-normal text-[#3B3B3B]
+				 font-inter  px-2 md:px-8"
 						>
 							Log IN
 						</li>
