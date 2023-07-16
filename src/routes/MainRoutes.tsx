@@ -1,10 +1,13 @@
 import Home from "@/pages/Home";
 import { createBrowserRouter } from "react-router-dom";
-import PublicRoute from "./PublicRoute";
+import AuthRoute from "./AuthRoute";
 import SignIn from "@/pages/SignIn";
 import SignUp from "@/pages/SignUp";
 import MainLayout from "@/layouts/MainLayout";
 import AuthLayout from "@/layouts/AuthLayout";
+import Books from "@/pages/Books";
+import AddBook from "@/components/AddBook/AddBook";
+import PrivateRoute from "./PrivateRoute";
 
 export const AllRoutes = createBrowserRouter([
 	{
@@ -18,19 +21,23 @@ export const AllRoutes = createBrowserRouter([
 			{
 				path: "/",
 				element: (
-					<PublicRoute>
+					<AuthRoute>
 						<Home />
-					</PublicRoute>
+					</AuthRoute>
 				),
 			},
-			// {
-			// 	index: true,
-			// 	element: (
-			// 		<PrivateRoute>
-			// 			<CoursePlayer />
-			// 		</PrivateRoute>
-			// 	),
-			// },
+			{
+				path: "/books",
+				element: <Books />,
+			},
+			{
+				path: "/add-book",
+				element: (
+					<PrivateRoute>
+						<AddBook />
+					</PrivateRoute>
+				),
+			},
 		],
 
 		errorElement: (
@@ -46,17 +53,17 @@ export const AllRoutes = createBrowserRouter([
 			{
 				path: "signin",
 				element: (
-					<PublicRoute>
+					<AuthRoute>
 						<SignIn />
-					</PublicRoute>
+					</AuthRoute>
 				),
 			},
 			{
 				path: "signup",
 				element: (
-					<PublicRoute>
+					<AuthRoute>
 						<SignUp />
-					</PublicRoute>
+					</AuthRoute>
 				),
 			},
 		],

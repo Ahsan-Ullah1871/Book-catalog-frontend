@@ -10,13 +10,17 @@ export default function useAuthCheck() {
 
 	useEffect(() => {
 		if (cookies.auth_details?.isLoggedIn) {
-			const { isLoggedIn = false, user = undefined } =
-				cookies.auth_details;
+			const {
+				isLoggedIn = false,
+				user = undefined,
+				accessToken = "",
+			} = cookies.auth_details;
 			if (isLoggedIn && user) {
 				dispatch(
 					userLoggedIn({
 						isLoggedIn: isLoggedIn,
 						user,
+						accessToken,
 					})
 				);
 			}

@@ -20,12 +20,14 @@ export default function Header() {
 
 			{/* Menus */}
 			<ul className="flex items-center justify-end divide-x divide-[#3B3B3B] ">
-				<li
-					className=" text-base font-normal text-[#3B3B3B]
+				<Link to="/books">
+					<li
+						className=" text-base font-normal text-[#3B3B3B]
 				 font-inter px-8 "
-				>
-					Books
-				</li>
+					>
+						Books
+					</li>
+				</Link>
 				<li
 					className=" text-base font-normal text-[#3B3B3B]
 				 font-inter  px-8"

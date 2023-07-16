@@ -1,10 +1,10 @@
-import { ApiSlice } from "@/redux/api/apiSlice";
+import { apiSlice } from "@/redux/api/apiSlice";
 import { userLoggedIn } from "./authSlice";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-export const authAPi = ApiSlice.injectEndpoints({
+export const authAPi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		// register
 		register: builder.mutation({
@@ -22,6 +22,9 @@ export const authAPi = ApiSlice.injectEndpoints({
 							isLoggedIn: true,
 							user: result.data.data
 								.user_details,
+							accessToken:
+								result.data.data
+									.accessToken,
 						}),
 						{ maxAge: 6000 }
 					);
@@ -30,6 +33,9 @@ export const authAPi = ApiSlice.injectEndpoints({
 							isLoggedIn: true,
 							user: result.data.data
 								.user_details,
+							accessToken:
+								result.data.data
+									.accessToken,
 						})
 					);
 				} catch (error) {
@@ -56,6 +62,9 @@ export const authAPi = ApiSlice.injectEndpoints({
 							isLoggedIn: true,
 							user: result.data.data
 								.user_details,
+							accessToken:
+								result.data.data
+									.accessToken,
 						}),
 						{ maxAge: 6000 }
 					);
@@ -64,6 +73,9 @@ export const authAPi = ApiSlice.injectEndpoints({
 							isLoggedIn: true,
 							user: result.data.data
 								.user_details,
+							accessToken:
+								result.data.data
+									.accessToken,
 						})
 					);
 				} catch (error) {
