@@ -17,12 +17,24 @@ export const readingApi = apiSlice.injectEndpoints({
 			query: (data) => ({
 				url: `/reading`,
 				method: "POST",
-				body: data,
+				body: { ...data },
+			}),
+			invalidatesTags: ["reading_list"],
+		}),
+		//   Add Book review
+		removeBookFromReadingList: builder.mutation({
+			query: (data) => ({
+				url: `/reading/${data?._id}`,
+				method: "DELETE",
+				body: { ...data },
 			}),
 			invalidatesTags: ["reading_list"],
 		}),
 	}),
 });
 
-export const { useGetReadingListQuery, useAddBookInReadingListMutation } =
-	readingApi;
+export const {
+	useGetReadingListQuery,
+	useAddBookInReadingListMutation,
+	useRemoveBookFromReadingListMutation,
+} = readingApi;

@@ -61,7 +61,7 @@ const SignUpForm = () => {
 		} else if (isSuccess) {
 			setIsAlertOpen(true);
 			setAlertType("success");
-			setAlertMessages("Logged in successfully");
+			setAlertMessages("Signed up successfully");
 		}
 	}, [error, isError, isSuccess]);
 

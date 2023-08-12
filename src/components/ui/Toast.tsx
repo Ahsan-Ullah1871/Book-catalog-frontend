@@ -24,6 +24,8 @@ export default function ToastContainer({
 		}
 	}, [isAlertOpen]);
 
+	//
+
 	return (
 		<div className={className}>
 			{/* Success */}
@@ -53,7 +55,10 @@ export default function ToastContainer({
 					</div>
 					<button
 						type="button"
-						onClick={() => setIsAlertOpen(false)}
+						onClick={(e) => {
+							e.stopPropagation();
+							setIsAlertOpen(false);
+						}}
 						className="ml-auto text-gray-500 "
 					>
 						<svg
@@ -101,7 +106,10 @@ export default function ToastContainer({
 					</div>
 					<button
 						type="button"
-						onClick={() => setIsAlertOpen(false)}
+						onClick={(e) => {
+							e.stopPropagation();
+							setIsAlertOpen(false);
+						}}
 						className="ml-auto text-gray-500 "
 					>
 						<svg
@@ -150,7 +158,10 @@ export default function ToastContainer({
 					</div>
 					<button
 						type="button"
-						onClick={() => setIsAlertOpen(false)}
+						onClick={(e) => {
+							e.stopPropagation();
+							setIsAlertOpen(false);
+						}}
 						className="ml-auto text-gray-500 "
 					>
 						<svg

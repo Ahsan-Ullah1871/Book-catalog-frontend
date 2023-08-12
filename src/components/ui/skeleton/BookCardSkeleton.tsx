@@ -16,7 +16,7 @@ export default function BookCardSkeleton() {
 				{/* buttons*/}
 				<div className="  border-t border-[#000] p-[10px]  flex items-center justify-between mt-auto">
 					<button className="text-[#4d4d4d] font-inter  text-lg font-semibold  ">
-						Book now
+						Start reading
 					</button>
 					<button className="text-xm text-white px-6 py-1 bg-[#474747]">
 						{ICONS.heart_icon}

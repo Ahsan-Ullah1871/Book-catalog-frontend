@@ -9,7 +9,7 @@ const HeroBanner = () => {
 			{/* Title */}
 			<h1
 				className=" text-[#3C3C3C] text-center font-anton text-[70px] md:text-[111px]  font-normal leading-[70px] md:leading-[140px] letter-spacing 
-            tracking-[-2.82px]  "
+            tracking-[-2.82px]   max-w-[1170px] mx-auto"
 			>
 				Explore Our Book Catalog Today!
 			</h1>

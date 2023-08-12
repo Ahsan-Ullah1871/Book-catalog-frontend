@@ -20,7 +20,7 @@ export default function AddReviewModal({
 			<Button
 				title="Write a review"
 				className=" mt-7 text-white text-base  font-semibold bg-[#000]  px-[40px] md:px-[40px]  py-[10px]  md:py-[15px] "
-				icon={ICONS.delete_icon}
+				icon={ICONS.chat_icon}
 				onClickHandler={() => props.setOpenModal("pop-up")}
 			/>
 

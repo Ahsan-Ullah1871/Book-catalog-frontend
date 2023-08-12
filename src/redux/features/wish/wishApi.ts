@@ -12,16 +12,29 @@ export const wishApi = apiSlice.injectEndpoints({
 			providesTags: ["wishlist"],
 		}),
 
-		//   Add Book review
+		//   Add Book in wish
 		addBookInWish: builder.mutation({
 			query: (data) => ({
 				url: `/wish`,
 				method: "POST",
-				body: data,
+				body: { ...data },
+			}),
+			invalidatesTags: ["wishlist"],
+		}),
+		//   delete from wish
+		deleteBookFromWish: builder.mutation({
+			query: (data) => ({
+				url: `/wish/${data?._id}`,
+				method: "DELETE",
+				body: { ...data },
 			}),
 			invalidatesTags: ["wishlist"],
 		}),
 	}),
 });
 
-export const { useGetWishListQuery, useAddBookInWishMutation } = wishApi;
+export const {
+	useGetWishListQuery,
+	useAddBookInWishMutation,
+	useDeleteBookFromWishMutation,
+} = wishApi;
