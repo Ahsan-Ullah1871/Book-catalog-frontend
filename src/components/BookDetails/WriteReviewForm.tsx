@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "../ui/Button";
-import TextInput from "../ui/form_items/TextInput";
 import { useEffect, useState } from "react";
 import ToastContainer from "../ui/Toast";
 import ICONS from "@/shared/AllIcons";
@@ -9,6 +8,7 @@ import TextArea from "../ui/form_items/TextArea";
 import { useAppSelector } from "@/hooks/reduxHook";
 import { useAddBookReviewMutation } from "@/redux/features/review/reviewApi";
 import { IBook } from "@/types/Book";
+import RatingPicker from "../ui/form_items/RatingPicker";
 
 const WriteReviewForm = ({ book_info }: { book_info: IBook | undefined }) => {
 	// user details
@@ -98,14 +98,15 @@ const WriteReviewForm = ({ book_info }: { book_info: IBook | undefined }) => {
 				/>
 
 				{/* Rating */}
-				<TextInput
-					type="number"
-					placeHolder="Rating"
-					currentValue={review_form.rating as number}
-					onChange={(e) =>
-						inputChangeHandler(e, "rating")
+				{/* {/* Rating */}
+				<RatingPicker
+					current_value={review_form.rating as number}
+					clickHandler={(value) =>
+						setReviewForm((prev) => ({
+							...prev,
+							["rating"]: Number(value),
+						}))
 					}
-					required={true}
 				/>
 			</div>
 

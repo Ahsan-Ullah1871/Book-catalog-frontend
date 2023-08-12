@@ -9,6 +9,7 @@ import TextArea from "../ui/form_items/TextArea";
 import { useAppSelector } from "@/hooks/reduxHook";
 import { IBook } from "@/types/Book";
 import { useEditBookMutation } from "@/redux/features/book/bookApi";
+import RatingPicker from "../ui/form_items/RatingPicker";
 
 const EditBookForm = ({ book_details }: { book_details: IBook }) => {
 	// user details
@@ -241,6 +242,17 @@ const EditBookForm = ({ book_details }: { book_details: IBook }) => {
 						)
 					}
 					required={true}
+				/>
+
+				{/* {/* Rating */}
+				<RatingPicker
+					current_value={book_form.rating}
+					clickHandler={(value) =>
+						setBookForm((prev) => ({
+							...prev,
+							["rating"]: Number(value),
+						}))
+					}
 				/>
 			</div>
 

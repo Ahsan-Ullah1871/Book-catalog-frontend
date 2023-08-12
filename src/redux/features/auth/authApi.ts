@@ -26,7 +26,7 @@ export const authAPi = apiSlice.injectEndpoints({
 								result.data.data
 									.accessToken,
 						}),
-						{ maxAge: 6000 }
+						{ path: "/", maxAge: 6000 }
 					);
 					dispatch(
 						userLoggedIn({
@@ -66,7 +66,7 @@ export const authAPi = apiSlice.injectEndpoints({
 								result.data.data
 									.accessToken,
 						}),
-						{ maxAge: 6000 }
+						{ path: "/", maxAge: 6000 }
 					);
 					dispatch(
 						userLoggedIn({

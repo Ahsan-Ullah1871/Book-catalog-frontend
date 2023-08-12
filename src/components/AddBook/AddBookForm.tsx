@@ -8,6 +8,7 @@ import { get_error_messages } from "@/lib/error_messages";
 import TextArea from "../ui/form_items/TextArea";
 import { useAppSelector } from "@/hooks/reduxHook";
 import { useAddBookMutation } from "@/redux/features/book/bookApi";
+import RatingPicker from "../ui/form_items/RatingPicker";
 
 const AddBookForm = () => {
 	// user details
@@ -34,7 +35,7 @@ const AddBookForm = () => {
 		publisher: "",
 		language: "",
 		pages: 0,
-		rating: 0,
+		rating: 1,
 		description: "",
 		cover_image: "",
 		keynotes: [""],
@@ -141,8 +142,8 @@ const AddBookForm = () => {
 					required={true}
 				/>
 
-				{/* Language  & Pages & Rating*/}
-				<div className="grid grid-cols-3 gap-5">
+				{/* Language  & Pages */}
+				<div className="grid grid-cols-2 gap-5">
 					{/* Language */}
 					<TextInput
 						type="text"
@@ -164,18 +165,6 @@ const AddBookForm = () => {
 						currentValue={book_form.pages}
 						onChange={(e) =>
 							inputChangeHandler(e, "pages")
-						}
-						required={true}
-					/>
-					{/* Rating */}
-					<TextInput
-						type="number"
-						placeHolder="Rating"
-						currentValue={
-							book_form.rating as number
-						}
-						onChange={(e) =>
-							inputChangeHandler(e, "rating")
 						}
 						required={true}
 					/>
@@ -222,6 +211,17 @@ const AddBookForm = () => {
 						)
 					}
 					required={true}
+				/>
+
+				{/* {/* Rating */}
+				<RatingPicker
+					current_value={book_form.rating}
+					clickHandler={(value) =>
+						setBookForm((prev) => ({
+							...prev,
+							["rating"]: Number(value),
+						}))
+					}
 				/>
 			</div>
 

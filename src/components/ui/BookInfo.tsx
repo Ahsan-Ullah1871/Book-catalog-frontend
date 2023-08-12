@@ -4,9 +4,65 @@ import Button from "./Button";
 import { IBook } from "@/types/Book";
 import AddReviewModal from "../BookDetails/AddReviewModal";
 import { useAppSelector } from "@/hooks/reduxHook";
+import RatingPicker from "./form_items/RatingPicker";
+import { useNavigate } from "react-router-dom";
+import { useAddBookInReadingListMutation } from "@/redux/features/reading/readingApi";
+import { useEffect, useState } from "react";
+import { get_error_messages } from "@/lib/error_messages";
+import ToastContainer from "./Toast";
 
 const BookInfo = ({ book_info }: { book_info: IBook | undefined }) => {
-	const { isLoggedIn } = useAppSelector((state) => state.auth);
+	const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+	const navigate = useNavigate();
+
+	// add in reading  list  mutation
+	const [
+		addBookInReadingList,
+		{
+			data: addInToReadData,
+			isLoading: isAddToReadLoading,
+			isError: isAddIntoReadError,
+			error: addIntoReadError,
+			isSuccess: isAddIntoReadSuccess,
+		},
+	] = useAddBookInReadingListMutation();
+
+	// Alert State
+	const [isAlertOpen, setIsAlertOpen] = useState(false);
+	const [AlertType, setAlertType] = useState<
+		"success" | "error" | "warning"
+	>("success");
+	const [AlertMessages, setAlertMessages] = useState("");
+
+	//Addin to readlist handler
+	const addInToReadListHandler = () => {
+		isLoggedIn
+			? addBookInReadingList({
+					book_id: book_info?._id,
+					user_id: user?._id,
+			  })
+			: navigate("/auth/signin");
+	};
+
+	// Error message
+	useEffect(() => {
+		if (
+			isAddIntoReadError &&
+			addIntoReadError &&
+			"data" in addIntoReadError
+		) {
+			setIsAlertOpen(true);
+			setAlertType("error");
+			const error_messages =
+				get_error_messages(addIntoReadError);
+			setAlertMessages(error_messages);
+		} else if (isAddIntoReadSuccess) {
+			setIsAlertOpen(true);
+			setAlertType("success");
+			setAlertMessages(addInToReadData?.message);
+		}
+	}, [isAddIntoReadError, addIntoReadError, isAddIntoReadSuccess]);
+
 	return (
 		<div className="h-full w-full min-h-[200px] border border-[#000000] bg-[#EAE3D1] p-9">
 			{/* title */}
@@ -15,21 +71,9 @@ const BookInfo = ({ book_info }: { book_info: IBook | undefined }) => {
 			</h2>
 			{/* ratings */}
 			<div className="flex items-center justify-start mt-5">
-				<span className="text-[#FE8159]">
-					{ICONS.star_icon}
-				</span>
-				<span className="text-white">
-					{ICONS.star_icon}
-				</span>
-				<span className="text-white">
-					{ICONS.star_icon}
-				</span>
-				<span className="text-white">
-					{ICONS.star_icon}
-				</span>
-				<span className="text-white">
-					{ICONS.star_icon}
-				</span>
+				<RatingPicker
+					current_value={book_info?.rating as number}
+				/>
 			</div>
 			{/* Description */}
 			<div className=" mt-7">
@@ -47,6 +91,12 @@ const BookInfo = ({ book_info }: { book_info: IBook | undefined }) => {
 				<Button
 					title="Start reading"
 					className=" mt-7 text-[#000] text-base  font-semibold bg-[#B4E907]  px-[40px] md:px-[40px]  py-[10px]  md:py-[15px] "
+					onClickHandler={addInToReadListHandler}
+					icon={
+						isAddToReadLoading
+							? ICONS.button_loading_icon
+							: undefined
+					}
 				/>
 				{isLoggedIn && (
 					<AddReviewModal book_info={book_info} />
@@ -109,6 +159,17 @@ const BookInfo = ({ book_info }: { book_info: IBook | undefined }) => {
 					</Accordion.Content>
 				</Accordion.Panel>
 			</Accordion> */}
+
+			{/* Toast */}
+			{isAlertOpen && (
+				<ToastContainer
+					type={AlertType}
+					messages={AlertMessages}
+					isAlertOpen={isAlertOpen}
+					setIsAlertOpen={setIsAlertOpen}
+					className="absolute  top-20 left-0 right-0 mx-auto flex justify-center"
+				/>
+			)}
 		</div>
 	);
 };

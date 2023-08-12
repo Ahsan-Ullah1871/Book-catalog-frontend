@@ -28,6 +28,7 @@ export const authSlice = createSlice({
 			state.isLoggedIn = false;
 			state.user = undefined;
 			state.accessToken = undefined;
+			window.location.reload();
 		},
 	},
 });

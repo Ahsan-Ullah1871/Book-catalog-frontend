@@ -1,41 +1,53 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { get_error_messages } from "@/lib/error_messages";
-import { useAddBookInWishMutation } from "@/redux/features/wish/wishApi";
+import { useDeleteBookFromWishMutation } from "@/redux/features/wish/wishApi";
 import ICONS from "@/shared/AllIcons";
 import { IBook } from "@/types/Book";
 import { useEffect, useState } from "react";
 import ToastContainer from "./Toast";
 import { useAppSelector } from "@/hooks/reduxHook";
-import { useAddBookInReadingListMutation } from "@/redux/features/reading/readingApi";
+import { useRemoveBookFromReadingListMutation } from "@/redux/features/reading/readingApi";
 import { useNavigate } from "react-router-dom";
+import { IWish } from "@/types/Wish";
+import { IReading } from "@/types/Reading";
 
-const BookCard = ({ book }: { book: IBook }) => {
+const BookCard3 = ({
+	wish_book,
+	reading_book,
+}: {
+	wish_book?: IWish;
+	reading_book?: IReading;
+}) => {
+	const book: IBook = wish_book
+		? (wish_book?.book_id as IBook)
+		: (reading_book?.book_id as IBook);
+
 	const { user, isLoggedIn } = useAppSelector((state) => state.auth);
 	const navigate = useNavigate();
 
 	// add in wish mutation hook
 	const [
-		addBookInWish,
+		deleteBookFromWish,
 		{
-			data: addToWishData,
-			isLoading: isAddToWisLoading,
+			data: removeFromWishData,
+			isLoading: isRemoveWisLoading,
 			isError,
 			error,
 			isSuccess,
 		},
-	] = useAddBookInWishMutation();
+	] = useDeleteBookFromWishMutation();
 
 	// add in reading  list  mutation
 	const [
-		addBookInReadingList,
+		removeBookFromReadingList,
 		{
-			data: addInToReadData,
-			isLoading: isAddToReadLoading,
-			isError: isAddIntoReadError,
-			error: addIntoReadError,
-			isSuccess: isAddIntoReadSuccess,
+			data: removeFromReadData,
+			isLoading: IRemoveFromReadLoading,
+			isError: IsRemoveFromReadError,
+			error: removeIntoReadError,
+			isSuccess: isRemoveFromReadSuccess,
 		},
-	] = useAddBookInReadingListMutation();
+	] = useRemoveBookFromReadingListMutation();
 
 	// Alert State
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -47,19 +59,20 @@ const BookCard = ({ book }: { book: IBook }) => {
 	//wishListHandler
 	const wishListHandler = (e: { stopPropagation: () => void }) => {
 		e.stopPropagation();
-
 		isLoggedIn
-			? addBookInWish({
+			? deleteBookFromWish({
+					_id: wish_book?._id,
 					book_id: book?._id,
 					user_id: user?._id,
 			  })
 			: navigate("/auth/signin");
 	};
 	//Addin to readlist handler
-	const addInToReadListHandler = (e: { stopPropagation: () => void }) => {
+	const ReadListHandler = (e: { stopPropagation: () => void }) => {
 		e.stopPropagation();
 		isLoggedIn
-			? addBookInReadingList({
+			? removeBookFromReadingList({
+					_id: reading_book?._id,
 					book_id: book?._id,
 					user_id: user?._id,
 			  })
@@ -76,26 +89,30 @@ const BookCard = ({ book }: { book: IBook }) => {
 		} else if (isSuccess) {
 			setIsAlertOpen(true);
 			setAlertType("success");
-			setAlertMessages(addToWishData?.message);
+			setAlertMessages(removeFromWishData?.message);
 		}
 	}, [error, isError, isSuccess]);
 	useEffect(() => {
 		if (
-			isAddIntoReadError &&
-			addIntoReadError &&
-			"data" in addIntoReadError
+			IsRemoveFromReadError &&
+			removeIntoReadError &&
+			"data" in removeIntoReadError
 		) {
 			setIsAlertOpen(true);
 			setAlertType("error");
 			const error_messages =
-				get_error_messages(addIntoReadError);
+				get_error_messages(removeIntoReadError);
 			setAlertMessages(error_messages);
-		} else if (isAddIntoReadSuccess) {
+		} else if (isRemoveFromReadSuccess) {
 			setIsAlertOpen(true);
 			setAlertType("success");
-			setAlertMessages(addInToReadData?.message);
+			setAlertMessages(removeFromReadData?.message);
 		}
-	}, [isAddIntoReadError, addIntoReadError, isAddIntoReadSuccess]);
+	}, [
+		IsRemoveFromReadError,
+		removeIntoReadError,
+		isRemoveFromReadSuccess,
+	]);
 
 	// card Click Handler
 	const cardClickHandler = () => {
@@ -104,7 +121,7 @@ const BookCard = ({ book }: { book: IBook }) => {
 
 	return (
 		<div
-			className=" relative bg-transparent w-[370px] h-[498px] border border-[#000] flex flex-col    cursor-pointer "
+			className=" relative bg-transparent w-full h-[498px] border border-[#000] flex flex-col   cursor-pointer  "
 			onClick={() => cardClickHandler()}
 		>
 			{/* Image */}
@@ -122,44 +139,48 @@ const BookCard = ({ book }: { book: IBook }) => {
 					</p>
 
 					<p className="text-[#3C3C3C] font-inter  text-xl  text-right font-bold  flex items-center gap-2 ">
-						{ICONS.star_icon} {book.rating}
+						{ICONS.star_icon} {book?.rating}
 					</p>
 				</div>
 				{/*  */}
 
 				<div className="my-[27px] px-4 flex items-center justify-start gap-3 flex-wrap">
 					<p className="text-[#3C3C3C] font-inter  text-base font-normal   ">
-						{book.publication_date}
+						{book?.publication_date}
 					</p>
 					<p className="text-[#3C3C3C] font-inter  text-base font-normal   ">
-						{book.pages} pages
+						{book?.pages} pages
 					</p>
 					<p className="text-[#3C3C3C] font-inter  text-base font-normal   ">
-						by-{book.author}
+						by-{book?.author}
 					</p>
 				</div>
 			</div>
 
 			{/* buttons*/}
-			<div className="  border-t border-[#000] h-14 px-4  flex items-center justify-between mt-auto">
-				<button
-					className=" h-full text-[#3C3C3C] font-inter  text-lg font-semibold flex items-center 
+			<div className="  border-t border-[#000] p-[10px]  h-14 px-4  flex items-center justify-between mt-auto">
+				{!wish_book && (
+					<button
+						className="text-[#3C3C3C] font-inter h-full  text-lg font-semibold flex items-center 
 					gap-2  "
-					onClick={addInToReadListHandler}
-				>
-					Start reading
-					{isAddToReadLoading
-						? ICONS.button_loading_icon
-						: ""}
-				</button>
-				<button
-					className="text-xm text-white px-6 py-1 bg-[#000000]"
-					onClick={wishListHandler}
-				>
-					{isAddToWisLoading
-						? ICONS.button_loading_icon
-						: ICONS.heart_icon}
-				</button>
+						onClick={ReadListHandler}
+					>
+						Remove from reading
+						{IRemoveFromReadLoading
+							? ICONS.button_loading_icon
+							: ""}
+					</button>
+				)}
+				{!reading_book && (
+					<button
+						className="text-xm text-white px-6 ml-auto py-1 bg-[#000000]  "
+						onClick={wishListHandler}
+					>
+						{isRemoveWisLoading
+							? ICONS.button_loading_icon
+							: ICONS.heart_fill_icon}
+					</button>
+				)}
 			</div>
 
 			{/* Toast */}
@@ -176,5 +197,5 @@ const BookCard = ({ book }: { book: IBook }) => {
 	);
 };
 
-export default BookCard;
+export default BookCard3;
 
